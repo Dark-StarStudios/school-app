@@ -32,6 +32,12 @@ class KindController extends Controller
     // GET /kinds/{id} — laat een zien
     public function show($id)
     {
+        $loggedInId = Session::get('kind_id');
+
+        if ($loggedInId != $id) {
+            abort(403, 'Geen toegang tot dit kind.');
+        }
+
         $kind = Kind::findOrFail($id);
         return response()->json($kind);
     }
