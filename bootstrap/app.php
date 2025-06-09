@@ -3,8 +3,8 @@
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
-use App\Http\iddleware\DocentAuth;
-use App\Http\iddleware\KindAuth;
+use App\Http\Middleware\DocentAuth;
+use App\Http\Middleware\KindAuth;
 
 return Application::configure(basePath: dirname(__DIR__))
     ->withRouting(
@@ -14,11 +14,10 @@ return Application::configure(basePath: dirname(__DIR__))
     )
     ->withMiddleware(function (Middleware $middleware) {
         $middleware->alias([
-            'docent' => \App\Http\Middleware\DocentAuth::class,
+            'docent' => DocentAuth::class,
+            'kind' => KindAuth::class,
         ]);
-        $middleware->alias([
-            'kind' => \App\Http\Middleware\KindAuth::class,
-        ]);
+
 
     })
     ->withExceptions(function (Exceptions $exceptions) {
