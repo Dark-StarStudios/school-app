@@ -7,31 +7,38 @@
 </head>
 
 <body class="bg-light">
-    <div class="container d-flex justify-content-center align-items-center min-vh-100">
-        <div class="card shadow p-4" style="min-width: 350px;">
-            <h2 class="mb-4 text-center">Login Kind</h2>
+    <div class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-md-5">
+                <div class="card shadow">
+                    <div class="card-header text-center bg-success text-white">
+                        <h3>Login Kind</h3>
+                    </div>
+                    <div class="card-body">
+                        @if ($errors->any())
+                        <div class="alert alert-danger">
+                            {{ $errors->first() }}
+                        </div>
+                        @endif
 
-            @if ($errors->any())
-            <div class="alert alert-danger">
-                {{ $errors->first() }}
+                        <form method="POST" action="{{ route('kind.login') }}">
+                            @csrf
+
+                            <div class="mb-3">
+                                <label for="gebruikersnaam" class="form-label">Gebruikersnaam:</label>
+                                <input type="text" class="form-control" id="gebruikersnaam" name="gebruikersnaam" value="{{ old('gebruikersnaam') }}" required autofocus>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="wachtwoord" class="form-label">Wachtwoord:</label>
+                                <input type="password" class="form-control" id="wachtwoord" name="wachtwoord" required>
+                            </div>
+
+                            <button type="submit" class="btn btn-success w-100">Login</button>
+                        </form>
+                    </div>
+                </div>
             </div>
-            @endif
-
-            <form method="POST" action="{{ route('kind.login') }}">
-                @csrf
-
-                <div class="mb-3">
-                    <label class="form-label">Gebruikersnaam:</label>
-                    <input type="text" name="gebruikersnaam" class="form-control" value="{{ old('gebruikersnaam') }}">
-                </div>
-
-                <div class="mb-3">
-                    <label class="form-label">Wachtwoord:</label>
-                    <input type="password" name="wachtwoord" class="form-control">
-                </div>
-
-                <button type="submit" class="btn btn-success w-100">Login</button>
-            </form>
         </div>
     </div>
 </body>
