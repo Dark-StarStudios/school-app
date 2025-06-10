@@ -70,9 +70,9 @@ class UsersController extends Controller
         $User = User::where('email', $request->email)->first();
 
         if ($User && Hash::check($request->password, $User->password)) {
-            
+
             Session::put('id', $User->id);
-            return redirect('/')->with('success', 'Ingelogd als ' . $User->email);
+            return redirect('/dash')->with('success', 'Ingelogd als ' . $User->email);
         }
 
         return back()->withErrors(['email' => 'Ongeldige inloggegevens'])->withInput();

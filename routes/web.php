@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Kind;
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\KindController;
@@ -21,6 +22,14 @@ Route::middleware('docent')->group(function () {
     Route::post('/kinds', [KindController::class, 'store']);
     Route::put('/kinds/{id}', [KindController::class, 'update']);
     Route::delete('/kinds/{id}', [KindController::class, 'destroy']);
+
+
+
+    Route::get('/dash', function () {
+        $kinds = Kind::all(); // haal alle kinderen op uit de database
+        return view('docent.dash', compact('kinds'));
+    });
+
 
     Route::post('/tafels', [TafelController::class, 'store']);
     Route::put('/tafels/{id}', [TafelController::class, 'update']);
@@ -52,6 +61,7 @@ Route::get('/docent/register', function () {
 });
 Route::get('/docent/login', [UsersController::class, 'loginForm'])->name('docent.login.form');
 Route::post('/docent/login', [UsersController::class, 'login'])->name('docent.login');
+
 
 Route::get('/docents', [UsersController::class, 'index']);
 Route::get('/docent/{id}', [UsersController::class, 'show']);
