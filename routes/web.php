@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\DB;
 
 
 // Alleen voor ingelogde kinderen
-Route::get('/kind/{id}', [KindController::class, 'show']);
+Route::get('/kinds/{id}', [KindController::class, 'show']);
 Route::middleware('kind')->group(function () {
     Route::get('/opdracht', function () {
         $kinds = App\Models\Kind::all();
