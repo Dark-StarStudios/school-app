@@ -24,6 +24,10 @@ Route::middleware('kind')->group(function () {
 
 // Alleen voor docenten
 Route::middleware('docent')->group(function () {
+    Route::get('/kind/register', function () {
+        return view('kind.register');
+    });
+
     Route::get('/kinds', [KindController::class, 'index']);
     Route::post('/kinds', [KindController::class, 'store']);
     Route::put('/kinds/{id}', [KindController::class, 'update']);
@@ -71,9 +75,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/kind/register', function () {
-    return view('kind.register');
-});
+
 Route::get('/kind/login', [KindController::class, 'loginForm'])->name('kind.login.form');
 Route::post('/kind/login', [KindController::class, 'login'])->name('kind.login');
 

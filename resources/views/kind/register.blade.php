@@ -28,7 +28,7 @@
                                 <input type="password" name="wachtwoord" class="form-control" required>
                             </div>
 
-                            <button type="submit" class="btn btn-success w-100">Login</button>
+                            <button type="submit" class="btn btn-success w-100">Registreren</button>
                             <a href="{{ route('kind.login') }}" class="btn btn-secondary w-100 mt-2">Terug naar login</a>
                         </form>
                     </div>

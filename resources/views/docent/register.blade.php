@@ -33,7 +33,7 @@
                                 <input type="password" name="password" class="form-control" required>
                             </div>
 
-                            <button type="submit" class="btn btn-success w-100">Login</button>
+                            <button type="submit" class="btn btn-success w-100">Registreren</button>
                             <a href="{{ route('docent.login') }}" class="btn btn-secondary w-100 mt-2">Terug naar login</a>
                         </form>
                     </div>
