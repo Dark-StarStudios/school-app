@@ -20,7 +20,7 @@
                         <table class="table table-bordered mb-0">
                             <thead>
                                 <tr>
-                                    <th>ID</th>
+                                    <!-- <th>ID</th> -->
                                     <th>Gebruikersnaam</th>
                                     <th>Tafel</th>
                                     <th>Score</th>
@@ -29,10 +29,17 @@
                             <tbody>
                                 @foreach ($kinds as $kind)
                                 <tr>
-                                    <td>{{ $kind->idKind }}</td>
+                                    <!-- <td>{{ $kind->idKind }}</td> -->
                                     <td>{{ $kind->gebruikersnaam }}</td>
                                     <td>{{ $kind->tafel }}</td>
                                     <td>{{ $kind->score }}</td>
+                                    <td>
+
+                                        <form action="kindscores/{{ $kind->idKindScore }}" method="POST" class="d-inline">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" class="btn btn-danger btn-sm">Verwijder</button>
+                                        </form>
                                 </tr>
                                 @endforeach
                             </tbody>

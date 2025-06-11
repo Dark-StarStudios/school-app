@@ -8,6 +8,7 @@ use App\Http\Controllers\ScoreController;
 use App\Http\Controllers\KindScoreController;
 
 use App\Http\Controllers\UsersController;
+use App\Models\Score;
 use Illuminate\Support\Facades\DB;
 
 
@@ -39,15 +40,19 @@ Route::middleware('docent')->group(function () {
             ->join('tafel', 'score.idTafeltje', '=', 'tafel.idTafeltje') // let op: idTafeltje
             ->select(
                 'kind.idKind',
+                'kind_score.idKindScore',
                 'kind.gebruikersnaam',
                 'score.score',
                 'tafel.nummer as tafel'
             )
             ->get();
 
+        KindScoreController::class;
+        ScoreController::class;
+
         return view('docent.dash', compact('kinds'));
     });
-    Route::delete('/scores/{id}', [ScoreController::class, 'destroy']);
+    Route::get('/scores/{id}', [ScoreController::class, 'destroy']);
 
     Route::post('/kindscores', [KindScoreController::class, 'store']);
     Route::put('/kindscores/{id}', [KindScoreController::class, 'update']);

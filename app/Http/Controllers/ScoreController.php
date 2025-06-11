@@ -52,7 +52,7 @@ class ScoreController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy( $id)
+    public function destroy($id)
     {
         $score = Score::findOrFail($id);
         $score->delete();
