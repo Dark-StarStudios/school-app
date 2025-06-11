@@ -46,7 +46,7 @@ class ScoreController extends Controller
             'score' => 'sometimes|integer',
         ]);
         $score->update($validation);
-        return response()->json($score);
+        return redirect()->back()->with('success', 'Bijgewerkt');
     }
 
     /**

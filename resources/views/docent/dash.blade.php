@@ -24,6 +24,7 @@
                                     <th>Gebruikersnaam</th>
                                     <th>Tafel</th>
                                     <th>Score</th>
+                                    <th></th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -33,13 +34,19 @@
                                     <td>{{ $kind->gebruikersnaam }}</td>
                                     <td>{{ $kind->tafel }}</td>
                                     <td>{{ $kind->score }}</td>
-                                    <td>
-
-                                        <form action="kindscores/{{ $kind->idKindScore }}" method="POST" class="d-inline">
+                                    <td class="d-flex flex-nowrap align-items-center">
+                                        <form action="score/{{ $kind->idScore }}" method="POST" class="d-flex flex-nowrap">
+                                            @csrf
+                                            @method('PUT')
+                                            <input type="number" name="score" value="{{ $kind->score }}" class="form-control" required>
+                                            <button type="submit" class="btn btn-primary btn-sm">Bijwerken</button>
+                                        </form>
+                                        <form action="kindscores/{{ $kind->idKindScore }}" method="POST">
                                             @csrf
                                             @method('DELETE')
-                                            <button type="submit" class="btn btn-danger btn-sm">Verwijder</button>
+                                            <button type="submit" class="btn btn-danger ">Verwijder</button>
                                         </form>
+                                    </td>
                                 </tr>
                                 @endforeach
                             </tbody>

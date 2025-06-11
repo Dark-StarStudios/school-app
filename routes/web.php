@@ -51,6 +51,7 @@ Route::middleware('docent')->group(function () {
             ->select(
                 'kind.idKind',
                 'kind_score.idKindScore',
+                'score.idScore',
                 'kind.gebruikersnaam',
                 'score.score',
                 'tafel.nummer as tafel'
@@ -62,10 +63,11 @@ Route::middleware('docent')->group(function () {
 
         return view('docent.dash', compact('kinds'));
     });
-    Route::get('/scores/{id}', [ScoreController::class, 'destroy']);
+    // Route::get('/scores/{id}', [ScoreController::class, 'destroy']);
 
-    Route::post('/kindscores', [KindScoreController::class, 'store']);
-    Route::put('/kindscores/{id}', [KindScoreController::class, 'update']);
+    // Route::post('/kindscores', [KindScoreController::class, 'store']);
+    Route::put('/score/{id}', [ScoreController::class, 'update']);
+    
     Route::delete('/kindscores/{id}', [KindScoreController::class, 'destroy']);
 });
 
