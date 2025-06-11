@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\KindScore;
+use App\Models\Score;
 
 class KindScoreController extends Controller
 {
@@ -55,7 +56,11 @@ class KindScoreController extends Controller
     public function destroy($id)
     {
         $KindScore = KindScore::findOrFail($id);
+        $score = $KindScore->score;
         $KindScore->delete();
-        return response()->json(['message' => 'Verwijderd'], 204);
+        if ($score) {
+        $score->delete();
+    }
+        return redirect()->back()->with('success', 'Verwijderd');
     }
 }

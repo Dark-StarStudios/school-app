@@ -13,11 +13,18 @@ class KindScore extends Authenticatable
 
     public function kind()
     {
-        return $this->belongsTo(Kind::class, 'id_Kind');
+        return $this->belongsTo(Kind::class, 'idKind');
     }
 
     public function score()
     {
-        return $this->belongsTo(Score::class, 'id_score');
+        return $this->belongsTo(Score::class, 'idScore');
     }
+    protected static function booted()
+    {
+        static::deleting(function ($kindScore) {
+            $kindScore->score()->delete();
+        });
+    }
+
 }

@@ -21,6 +21,6 @@ class Score extends Authenticatable
 
     public function kindScores()
     {
-        return $this->hasMany(KindScore::class, 'id_score');
+        return $this->hasMany(KindScore::class, 'idScore');
     }
 }
