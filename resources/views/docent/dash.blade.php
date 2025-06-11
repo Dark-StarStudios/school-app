@@ -8,29 +8,39 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 
-<body>
+<body class="bg-light">
     <div class="container mt-5">
-        <h4 class="mb-4">Overzicht van alle kinderen</h4>
-        <table class="table table-bordered">
-            <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Gebruikersnaam</th>
-                    <th>Tafel</th>
-                    <th>Score</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach ($kinds as $kind)
-                <tr>
-                    <td>{{ $kind->idKind }}</td>
-                    <td>{{ $kind->gebruikersnaam }}</td>
-                    <td>{{ $kind->tafel }}</td>
-                    <td>{{ $kind->score }}</td>
-                </tr>
-                @endforeach
-            </tbody>
-        </table>
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="card shadow">
+                    <div class="card-header bg-success text-white">
+                        <h4 class="mb-0">Overzicht van alle kinderen</h4>
+                    </div>
+                    <div class="card-body">
+                        <table class="table table-bordered mb-0">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Gebruikersnaam</th>
+                                    <th>Tafel</th>
+                                    <th>Score</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach ($kinds as $kind)
+                                <tr>
+                                    <td>{{ $kind->idKind }}</td>
+                                    <td>{{ $kind->gebruikersnaam }}</td>
+                                    <td>{{ $kind->tafel }}</td>
+                                    <td>{{ $kind->score }}</td>
+                                </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </body>
 
