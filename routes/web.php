@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Illuminate\Http\Request;
 
 use App\Http\Controllers\KindController;
 use App\Http\Controllers\TafelController;
@@ -8,7 +9,6 @@ use App\Http\Controllers\ScoreController;
 use App\Http\Controllers\KindScoreController;
 
 use App\Http\Controllers\UsersController;
-use App\Models\Score;
 use Illuminate\Support\Facades\DB;
 
 
@@ -19,6 +19,28 @@ Route::middleware('kind')->group(function () {
         $kinds = App\Models\Kind::all();
         return view('kind.opdracht', compact('kinds'));
     });
+    Route::match(['get', 'post'], '/opdracht', function (Request $request) {
+    $tafels = App\Models\Tafel::all();
+    $vragen = [];
+    $gekozenTafel = null;
+
+    if ($request->isMethod('post')) {
+        $tafelId = $request->input('idTafeltje');
+        $tafel = App\Models\Tafel::findOrFail($tafelId);
+        $gekozenTafel = $tafel->nummer;
+
+        // Genereer 20 vragen voor die tafel
+        for ($i = 0; $i < 20; $i++) {
+            $getal = rand(1, 10);
+            $vragen[] = [
+                'vraag' => "{$tafel->nummer} × {$getal}",
+                'antwoord' => $tafel->nummer * $getal,
+            ];
+        }
+    }
+
+    return view('opdracht', compact('tafels', 'vragen', 'gekozenTafel'));
+});
 });
 
 
