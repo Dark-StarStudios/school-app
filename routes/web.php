@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\DB;
 
 
 // Alleen voor ingelogde kinderen
-Route::get('/kinds/{id}', [KindController::class, 'show']);
+Route::get('/kind/{id}', [KindController::class, 'show']);
 Route::middleware('kind')->group(function () {
     Route::get('/opdracht', function () {
         $kinds = App\Models\Kind::all();
@@ -81,13 +81,16 @@ Route::get('/', function () {
 Route::get('/kind/login', [KindController::class, 'loginForm'])->name('kind.login.form');
 Route::post('/kind/login', [KindController::class, 'login'])->name('kind.login');
 
-Route::get('/docent/register', function () {
-    return view('docent.register');
-});
+
 Route::get('/docent/login', [UsersController::class, 'loginForm'])->name('docent.login.form');
 Route::post('/docent/login', [UsersController::class, 'login'])->name('docent.login');
 
 
+
+// Alleen voor Administratoren
+Route::get('/docent/register', function () {
+    return view('docent.register');
+});
 Route::get('/docents', [UsersController::class, 'index']);
 Route::get('/docent/{id}', [UsersController::class, 'show']);
 Route::post('/docents', [UsersController::class, 'store']);
