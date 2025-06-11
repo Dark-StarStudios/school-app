@@ -15,32 +15,33 @@ use Illuminate\Support\Facades\DB;
 // Alleen voor ingelogde kinderen
 Route::get('/kinds/{id}', [KindController::class, 'show']);
 Route::middleware('kind')->group(function () {
-    Route::get('/opdracht', function () {
-        $kinds = App\Models\Kind::all();
-        return view('kind.opdracht', compact('kinds'));
-    });
+    // Route::get('/opdracht', function () {
+    //     $kinds = App\Models\Kind::all();
+    //     return view('kind.opdracht', compact('kinds'));
+    // });
     Route::match(['get', 'post'], '/opdracht', function (Request $request) {
-    $tafels = App\Models\Tafel::all();
-    $vragen = [];
-    $gekozenTafel = null;
+        $tafels = App\Models\Tafel::all();
+        $vragen = [];
+        $gekozenTafel = null;
 
-    if ($request->isMethod('post')) {
-        $tafelId = $request->input('idTafeltje');
-        $tafel = App\Models\Tafel::findOrFail($tafelId);
-        $gekozenTafel = $tafel->nummer;
+        if ($request->isMethod('post')) {
+            $tafelId = $request->input('idTafeltje');
+            $tafel = App\Models\Tafel::findOrFail($tafelId);
+            $gekozenTafel = $tafel->nummer;
 
-        // Genereer 20 vragen voor die tafel
-        for ($i = 0; $i < 20; $i++) {
-            $getal = rand(1, 10);
-            $vragen[] = [
-                'vraag' => "{$tafel->nummer} × {$getal}",
-                'antwoord' => $tafel->nummer * $getal,
-            ];
+            // Genereer 20 vragen voor die tafel
+            for ($i = 0; $i < 20; $i++) {
+                $getal = rand(1, 10);
+                $getal2 = rand(1, 10);
+                $vragen[] = [
+                    'vraag' => "{$getal} + {$getal2}",
+                    'antwoord' => $getal + $getal2,
+                ];
+            }
         }
-    }
 
-    return view('opdracht', compact('tafels', 'vragen', 'gekozenTafel'));
-});
+        return view('kind.opdracht', compact('tafels', 'vragen', 'gekozenTafel'));
+    });
 });
 
 
@@ -89,7 +90,7 @@ Route::middleware('docent')->group(function () {
 
     // Route::post('/kindscores', [KindScoreController::class, 'store']);
     Route::put('/score/{id}', [ScoreController::class, 'update']);
-    
+
     Route::delete('/kindscores/{id}', [KindScoreController::class, 'destroy']);
 });
 

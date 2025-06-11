@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Session;
 
@@ -22,7 +23,7 @@ class KindController extends Controller
             'gebruikersnaam' => 'required|string|max:255',
             'wachtwoord' => 'required|string',
         ]);
-         $validated['wachtwoord'] = Hash::make($validated['wachtwoord']);
+        $validated['wachtwoord'] = Hash::make($validated['wachtwoord']);
 
         $kind = Kind::create($validated);
 
@@ -79,9 +80,9 @@ class KindController extends Controller
         $kind = Kind::where('gebruikersnaam', $request->gebruikersnaam)->first();
 
         if ($kind && Hash::check($request->wachtwoord, $kind->wachtwoord)) {
-            
+
             Session::put('kind_id', $kind->idKind);
-            return redirect('/')->with('success', 'Ingelogd als ' . $kind->gebruikersnaam);
+            return redirect('/opdracht')->with('success', 'Ingelogd als ' . $kind->gebruikersnaam);
         }
 
         return back()->withErrors(['gebruikersnaam' => 'Ongeldige inloggegevens'])->withInput();
