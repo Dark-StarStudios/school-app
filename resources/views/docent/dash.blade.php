@@ -21,7 +21,7 @@
                             <thead>
                                 <tr>
                                     <!-- <th>ID</th> -->
-                                    <th>Gebruikersnaam</th>
+                                    <th>Naam</th>
                                     <th>Tafel</th>
                                     <th>Score</th>
                                     <th></th>
