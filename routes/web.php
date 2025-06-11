@@ -14,6 +14,12 @@ use Illuminate\Support\Facades\DB;
 
 // Alleen voor ingelogde kinderen
 Route::get('/kinds/{id}', [KindController::class, 'show']);
+Route::middleware('kind')->group(function () {
+    Route::get('/opdracht', function () {
+        $kinds = App\Models\Kind::all();
+        return view('kind.opdracht', compact('kinds'));
+    });
+});
 
 
 // Alleen voor docenten
@@ -25,9 +31,9 @@ Route::middleware('docent')->group(function () {
 
 
 
-    Route::get('/dash', function () {
-        return view('docent.dash', compact('kinds', 'tafels'));
-    });
+    // Route::get('/dash', function () {
+    //     return view('docent.dash', compact('kinds', 'tafels'));
+    // });
 
 
     Route::post('/tafels', [TafelController::class, 'store']);
