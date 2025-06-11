@@ -1,6 +1,5 @@
 <?php
 
-use App\Models\Kind;
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\KindController;
@@ -9,8 +8,8 @@ use App\Http\Controllers\ScoreController;
 use App\Http\Controllers\KindScoreController;
 
 use App\Http\Controllers\UsersController;
+use Illuminate\Support\Facades\DB;
 
-use bootstrap\app;
 
 // Alleen voor ingelogde kinderen
 Route::get('/kinds/{id}', [KindController::class, 'show']);
@@ -26,17 +25,28 @@ Route::middleware('docent')->group(function () {
 
 
     Route::get('/dash', function () {
-        $kinds = Kind::all(); // haal alle kinderen op uit de database
-        return view('docent.dash', compact('kinds'));
+        return view('docent.dash', compact('kinds', 'tafels'));
     });
 
 
     Route::post('/tafels', [TafelController::class, 'store']);
     Route::put('/tafels/{id}', [TafelController::class, 'update']);
     Route::delete('/tafels/{id}', [TafelController::class, 'destroy']);
+    Route::get('/dash', function () {
+        $kinds = DB::table('kind')
+            ->join('kind_score', 'kind.idKind', '=', 'kind_score.idKind') // let op: idKind
+            ->join('score', 'kind_score.idScore', '=', 'score.idScore')   // let op: idScore
+            ->join('tafel', 'score.idTafeltje', '=', 'tafel.idTafeltje') // let op: idTafeltje
+            ->select(
+                'kind.idKind',
+                'kind.gebruikersnaam',
+                'score.score',
+                'tafel.nummer as tafel'
+            )
+            ->get();
 
-    Route::post('/scores', [ScoreController::class, 'store']);
-    Route::put('/scores/{id}', [ScoreController::class, 'update']);
+        return view('docent.dash', compact('kinds'));
+    });
     Route::delete('/scores/{id}', [ScoreController::class, 'destroy']);
 
     Route::post('/kindscores', [KindScoreController::class, 'store']);
