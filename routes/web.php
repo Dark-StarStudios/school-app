@@ -51,7 +51,7 @@ Route::middleware('kind')->group(function () {
                         'idKind' => Session::get('kind_id'),
                         'idScore' => $Score->idScore,
                     ]);
-                    // return redirect()->route('opdracht')->with('score', $score);
+                    return redirect('/opdracht?score=' . $score);
             }
 
             // Genereer 20 vragen voor die tafel

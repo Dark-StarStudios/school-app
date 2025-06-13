@@ -10,6 +10,11 @@
 <body class="p-5">
     <div class="container">
         <h2>Oefenen van tafeltjes</h2>
+        @if (isset($_GET['score']))
+        <div class="alert alert-success">
+            Je score is: {{ $_GET['score'] }}
+        </div>
+        @endif
         @if (!isset($_POST['idTafeltje']))
         <form method="POST" action="/opdracht" class="mb-4">
             @csrf
