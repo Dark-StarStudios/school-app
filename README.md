@@ -25,9 +25,6 @@ Een Laravel 12 webapplicatie waarmee kinderen tafelsommen kunnen oefenen, en doc
 1. **Clone het project:**
 
 ```bash
-git clone https://github.com/jouw-naam/school-tafel-app.git
-cd school-tafel-app
-
 composer install
 npm install && npm run dev
 
