@@ -17,9 +17,15 @@
                     </div>
                     <div class="card-body">
                         @if (isset($_GET['score']))
-                        <div class="alert alert-success">
-                            Je score is: {{ $_GET['score'] }}
-                        </div>
+                            @if ($_GET['score'] >15)
+                            <div class="alert alert-success">
+                                Je score is: {{ $_GET['score'] }}
+                            </div>
+                            @else
+                            <div class="alert alert-danger">
+                                Je score is: {{ $_GET['score'] }}
+                            </div>
+                            @endif
                         @endif
 
                         @if (!isset($_POST['idTafeltje']))
