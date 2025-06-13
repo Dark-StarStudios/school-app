@@ -9,7 +9,11 @@ use App\Http\Controllers\ScoreController;
 use App\Http\Controllers\KindScoreController;
 
 use App\Http\Controllers\UsersController;
+use App\Models\KindScore;
+use App\Models\Score;
 use Illuminate\Support\Facades\DB;
+//session
+use Illuminate\Support\Facades\Session;
 
 
 // Alleen voor ingelogde kinderen
@@ -23,11 +27,32 @@ Route::middleware('kind')->group(function () {
         $tafels = App\Models\Tafel::all();
         $vragen = [];
         $gekozenTafel = null;
+        $score = 0;
 
         if ($request->isMethod('post')) {
             $tafelId = $request->input('idTafeltje');
             $tafel = App\Models\Tafel::findOrFail($tafelId);
             $gekozenTafel = $tafel->nummer;
+
+            if($request->input('antwoord')){
+                $juisteAntwoorden = $request->input('juisteAntwoord');
+                $antwoorden = $request->input('antwoord');
+                foreach ($antwoorden as $i => $antwoord) {
+                    if (isset($juisteAntwoorden[$i]) && $antwoord == $juisteAntwoorden[$i]) {
+                        $score++;
+                    }
+                }
+                    $Score = Score::create([
+                        'idTafeltje' => $request->input('idTafeltje'),
+                        'score' => $score,
+                    ]);
+
+                    KindScore::create([
+                        'idKind' => Session::get('kind_id'),
+                        'idScore' => $Score->idScore,
+                    ]);
+                    // return redirect()->route('opdracht')->with('score', $score);
+            }
 
             // Genereer 20 vragen voor die tafel
             for ($i = 0; $i < 20; $i++) {
@@ -35,7 +60,7 @@ Route::middleware('kind')->group(function () {
                 $getal2 = rand(1, 10);
                 $vragen[] = [
                     'vraag' => "{$getal} + {$getal2}",
-                    'antwoord' => $getal + $getal2,
+                    'juisteAntwoord' => $getal + $getal2,
                 ];
             }
         }
@@ -43,7 +68,6 @@ Route::middleware('kind')->group(function () {
         return view('kind.opdracht', compact('tafels', 'vragen', 'gekozenTafel'));
     });
 });
-
 
 // Alleen voor docenten
 Route::middleware('docent')->group(function () {

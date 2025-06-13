@@ -10,7 +10,7 @@
 <body class="p-5">
     <div class="container">
         <h2>Oefenen van tafeltjes</h2>
-
+        @if (!isset($_POST['idTafeltje']))
         <form method="POST" action="/opdracht" class="mb-4">
             @csrf
             <div class="mb-3">
@@ -25,18 +25,23 @@
             </div>
             <button type="submit" class="btn btn-primary">Start oefening</button>
         </form>
-
+        @endif
         @if (!empty($vragen))
         <h4>20 vragen met de {{ $gekozenTafel }}-tafel</h4>
-        <form>
-            <ol>
+        <form method="POST" action="/opdracht" class="container">
+            @csrf
+            <div class="d-flex justify-content-start flex-wrap ">
+                <input type="hidden" name="idTafeltje" value="{{$gekozenTafel}}" >
                 @foreach ($vragen as $vraag)
-                <li class="mb-2">
+                <div class="p-3 m-1 rounded shadow">
                     {{ $vraag['vraag'] }} =
                     <input type="number" class="form-control d-inline-block" style="width: 100px;" name="antwoord[]" required>
-                </li>
+                    <input type="hidden" name="juisteAntwoord[]" value="{{ $vraag['juisteAntwoord'] }}">
+                </div>
                 @endforeach
-            </ol>
+            </div>
+            <br>
+            <button type="submit" class="btn btn-primary">Klaar</button>
         </form>
         @endif
     </div>
