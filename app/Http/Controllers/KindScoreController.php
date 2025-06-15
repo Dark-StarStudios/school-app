@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\KindScore;
-use App\Models\Score;
 
 class KindScoreController extends Controller
 {

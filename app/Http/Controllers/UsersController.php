@@ -56,10 +56,13 @@ class UsersController extends Controller
     {
         //
     }
+
+
     public function loginForm()
     {
         return view('docent.login');
     }
+    
     public function login(Request $request)
     {
         $request->validate([
