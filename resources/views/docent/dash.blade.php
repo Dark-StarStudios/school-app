@@ -14,7 +14,7 @@
             <div class="col-md-8">
                 <div class="card shadow">
                     <div class="card-header bg-success text-white">
-                        <h4 class="mb-0">Overzicht van alle kinderen</h4>
+                        <h4 class="mb-0">Overzicht van alle resultaten</h4>
                     </div>
                     <div class="card-body">
                         <table class="table table-bordered mb-0">
@@ -28,7 +28,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($kinds as $kind)
+                                @foreach ($Alles as $kind)
                                 <tr>
                                     <!-- <td>{{ $kind->idKind }}</td> -->
                                     <td>{{ $kind->gebruikersnaam }}</td>
@@ -42,6 +42,50 @@
                                             <button type="submit" class="btn btn-primary btn-sm">Bijwerken</button>
                                         </form>
                                         <form action="kindscores/{{ $kind->idKindScore }}" method="POST">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" class="btn btn-danger ">Verwijder</button>
+                                        </form>
+                                    </td>
+                                </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="card shadow">
+                    <div class="card-header bg-success text-white">
+                        <h4 class="mb-0">Overzicht van alle kinderen</h4>
+                    </div>
+                    <div class="card-body">
+                        <table class="table table-bordered mb-0">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Naam</th>
+                                    <th>Bijwerken / Verwijder</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach ($kinds as $kind)
+                                <tr>
+                                    <td>{{ $kind->idKind }}</td>
+                                    <td>{{ $kind->gebruikersnaam }}</td>
+                                    <td class="d-flex flex-nowrap align-items-center">
+                                        <form action="kinds/{{ $kind->idKind }}" method="POST" class="d-flex flex-nowrap">
+                                            @csrf
+                                            @method('PUT')
+                                            <input type="text" name="gebruikersnaam" value="{{ $kind->gebruikersnaam }}" class="form-control" required>
+                                            <button type="submit" class="btn btn-primary btn-sm">Bijwerken</button>
+                                        </form>
+                                        <form action="kinds/{{ $kind->idKind }}" method="POST">
                                             @csrf
                                             @method('DELETE')
                                             <button type="submit" class="btn btn-danger ">Verwijder</button>

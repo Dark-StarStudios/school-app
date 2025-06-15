@@ -2,16 +2,13 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-// use models\KindScore;
-
 
 class Kind extends Authenticatable
 {
     protected $table = 'kind';
     protected $primaryKey = 'idKind';
-    public $timestamps = false;
+    public $timestamps = true;
 
     protected $fillable = [
         'gebruikersnaam',
@@ -22,8 +19,18 @@ class Kind extends Authenticatable
         'wachtwoord',
     ];
 
-    public function kindScores()
+    public function kindScores() // PK veranderd van idKind naar id_Kind
     {
-        return $this->hasMany(KindScore::class, 'id_Kind');
+        return $this->hasMany(KindScore::class, 'idKind');
     }
+    
+    protected static function booted()
+    {
+        static::deleting(function ($kind) {
+            foreach ($kind->kindScores as $kindScore) {
+                $kindScore->delete(); // Это вызовет каскад на score
+            }
+        });
+    }
+
 }

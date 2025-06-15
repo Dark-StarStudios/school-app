@@ -44,7 +44,7 @@ class TafelController extends Controller
             'nummer' => 'sometimes|integer',
         ]);
         $Tafel->update($validation);
-        return response()->json($Tafel);
+        return redirect()->back()->with('success', 'Bijgewerkt');
     }
 
     /**
@@ -54,6 +54,6 @@ class TafelController extends Controller
     {
         $Tafel = Tafel::findOrFail($id);
         $Tafel->delete();
-        return response()->json(['message' => 'Verwijderd'], 204);
+        return redirect()->back()->with('success', 'Verwijderd');
     }
 }

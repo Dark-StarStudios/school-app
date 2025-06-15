@@ -23,16 +23,27 @@ class KindController extends Controller
             'gebruikersnaam' => 'required|string|max:255',
             'wachtwoord' => 'required|string',
         ]);
+
+        //errors
+        if (Kind::where('gebruikersnaam', $validated['gebruikersnaam'])->exists()) {
+            return response()->json(['message' => 'Gebruikersnaam bestaat al.'], 400);
+        }
+        if (Kind::where('wachtwoord', $validated['wachtwoord'])->exists()) {
+            return response()->json(['message' => 'Wachtwoord bestaat al.'], 400);
+        }
+        
+        //hash wachtwoord
         $validated['wachtwoord'] = Hash::make($validated['wachtwoord']);
 
         $kind = Kind::create($validated);
 
-        return response()->json($kind, 201);
+        return redirect('/dash')->with('success', 'kind is geregestreerd ' . $kind->gebruikersnaam);
     }
 
     // GET /kinds/{id} — laat een zien
     public function show($id)
     {
+        // als de gebruiker niet ingelogd is, dan stuur hem naar de login pagina
         $loggedInId = Session::get('kind_id');
 
         if ($loggedInId != $id) {
@@ -40,12 +51,14 @@ class KindController extends Controller
         }
 
         $kind = Kind::findOrFail($id);
+
         return response()->json($kind);
     }
 
     // PUT /kinds/{id} — update
     public function update(Request $request, $id)
     {
+
         $kind = Kind::findOrFail($id);
 
         $validated = $request->validate([
@@ -55,7 +68,7 @@ class KindController extends Controller
 
         $kind->update($validated);
 
-        return response()->json($kind);
+        return redirect()->back()->with('success', 'Bijgewerkt');
     }
 
     // DELETE /kinds/{id} — verwijderen
@@ -64,12 +77,16 @@ class KindController extends Controller
         $kind = Kind::findOrFail($id);
         $kind->delete();
 
-        return response()->json(['message' => 'Verwijderd'], 204);
+        return redirect()->back()->with('success', 'Verwijderd');
     }
+
+
+
     public function loginForm()
     {
         return view('kind.login');
     }
+
     public function login(Request $request)
     {
         $request->validate([
